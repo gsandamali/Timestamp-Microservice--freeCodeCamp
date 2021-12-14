@@ -25,10 +25,29 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+app.get("/api/timestamp", function(req, res){
+  var now = new Date()
+  res.json({
+    "unix": now.getTime(),
+    "utc": now.toUTCString()
+  })
+});
+
 app.get("/api/:date?", function(req,res) {
   let dateString = req.params.date;
   console.log(dateString);
-  res.json({ error : "Invalid Date" });
+  let passedInValue = new Date(dateString);
+  
+  if (passedInValue == "Invalid Date") {
+    res.json({ error : "Invalid Date" });
+  } else{
+    res.json({
+      "unix": passedInValue.getTime(),
+      "utc": passedInValue.toUTCString()
+    })
+  }
+
+  //{ unix: 1451001600000, utc: "Fri, 25 Dec 2015 00:00:00 GMT" }
 });
 
 
