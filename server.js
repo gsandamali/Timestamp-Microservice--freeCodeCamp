@@ -36,6 +36,15 @@ app.get("/api/timestamp", function(req, res){
 app.get("/api/:date?", function(req,res) {
   let dateString = req.params.date;
   console.log(dateString);
+
+  if (parseInt(dateString) > 1000) {
+    let unixTime = new Date(parseInt(dateString));
+    res.json({
+      "unix": unixTime.getTime(),
+      "utc": unixTime.toUTCString()
+    });
+  }
+
   let passedInValue = new Date(dateString);
   
   if (passedInValue == "Invalid Date") {
